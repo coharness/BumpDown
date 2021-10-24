@@ -62,13 +62,13 @@ if __name__ == '__main__':
 
     for opt, arg, in opts:
         if opt == '-c':
-            if arg == 'as_bumps':
+            if arg == 'as':
                 category_search(as_bumps)
-            elif arg == 'bw_cards':
+            elif arg == 'bw':
                 category_search(bw_cards)
-            elif arg == 'view_bump_builder':
+            elif arg == 'vbb':
                 category_search(view_bump_builder)
-            elif arg == 'toonami':
+            elif arg == 'toon':
                 category_search(toonami)
             elif arg == '*':
                 category_search(as_bumps)
@@ -76,4 +76,4 @@ if __name__ == '__main__':
                 category_search(view_bump_builder)
                 category_search(toonami)
             else:
-                print('Invalid category entered. Please use \'as_bumps\', \'bw_cards\', \'view_bump_builder\', \'toonami\', or \'*\'')
+                print('Invalid category entered. Please use \'as\', \'bw\', \'vbb\', \'toon\', or \'*\'')
