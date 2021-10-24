@@ -41,8 +41,16 @@ def category_search(category):
 
         # Download the file.
         print(f'Downloading {title}.mp4')
-        urlretrieve(video_url, os.path.join(category.title, f'{title}.mp4'))
-        print('Complete\n')
+        path = os.path.join(category.title, f'{title}.mp4')
+        
+        # Skip existing files.
+        if not os.path.exists(path):
+            urlretrieve(video_url, path)
+            print('Complete')
+        else:
+            print('File already exists')
+
+        print('\n')
 
 
 if __name__ == '__main__':
