@@ -40,7 +40,9 @@ def category_search(category):
             os.mkdir(category.title)
 
         # Download the file.
+        print(f'Downloading {title}.mp4')
         urlretrieve(video_url, os.path.join(category.title, f'{title}.mp4'))
+        print('Complete\n')
 
 
 if __name__ == '__main__':
