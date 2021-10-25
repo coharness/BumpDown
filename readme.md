@@ -9,3 +9,5 @@ This is a quick script that will parse through all of the videos in a given cate
    * `vbb`= Viewer and Bump Builder
    * `toon` = Toonami
    * `*` = All
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/coharness)
