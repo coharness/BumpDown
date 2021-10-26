@@ -12,11 +12,12 @@ class Category:
         self.title = title
         self.name = name
 
-
-as_bumps = Category('AS Bumps', 'bumps')
-bw_cards = Category('B&W Cards', 'cards')
-view_bump_builder = Category('Viewer & Bump Builder', 'vcbb')
-toonami = Category('Toonami', 'toon')
+categories_dict = {
+    'as': Category('AS Bumps', 'bumps'),
+    'bw': Category('B&W Cards', 'cards'),
+    'vbb': Category('Viewer & Bump Builder', 'vcbb'),
+    'toon': Category('Toonami', 'toon')
+}
 
 
 def category_search(category):
@@ -26,7 +27,9 @@ def category_search(category):
     soup = BeautifulSoup(page.content, 'html.parser')
 
     # Loop through each filtered result.
-    for li in soup.find_all('div', {'id': 'bw-results'})[0].findChildren('li'):
+    links = soup.find_all('div', {'id': 'bw-results'})[0].findChildren('li')
+
+    for li in links:
         title = li['title']
         link = li.find('a')['href']
 
@@ -42,7 +45,7 @@ def category_search(category):
         # Download the file.
         print(f'Downloading {title}.mp4')
         path = os.path.join(category.title, f'{title}.mp4')
-        
+
         # Skip existing files.
         if not os.path.exists(path):
             urlretrieve(video_url, path)
@@ -50,30 +53,21 @@ def category_search(category):
         else:
             print('File already exists')
 
-        print('\n')
-
 
 if __name__ == '__main__':
+    done = False
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'c:', ['category'])
     except:
-        print('BumpDown.py -c <Category>')
+        print(f'{sys.argv[0]} -c <Category>')
         sys.exit(2)
 
     for opt, arg, in opts:
         if opt == '-c':
-            if arg == 'as':
-                category_search(as_bumps)
-            elif arg == 'bw':
-                category_search(bw_cards)
-            elif arg == 'vbb':
-                category_search(view_bump_builder)
-            elif arg == 'toon':
-                category_search(toonami)
-            elif arg == '*':
-                category_search(as_bumps)
-                category_search(bw_cards)
-                category_search(view_bump_builder)
-                category_search(toonami)
-            else:
-                print('Invalid category entered. Please use \'as\', \'bw\', \'vbb\', \'toon\', or \'*\'')
+            for cat_id, cat in categories_dict.items():
+                if arg in ['*', cat_id]:
+                    category_search(cat)
+                    done = True
+
+    if not done:
+        print(f'Invalid category entered. Please use one of the following: {", ".join(categories_dict.keys())}')
